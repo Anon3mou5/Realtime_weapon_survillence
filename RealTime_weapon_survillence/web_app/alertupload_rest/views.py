@@ -6,7 +6,6 @@ from django.http import HttpResponse
 from django.core.mail import send_mail
 from rest_framework.exceptions import ValidationError
 
-from twilio.rest import Client
 from threading import Thread
 import re
 from django.conf import settings

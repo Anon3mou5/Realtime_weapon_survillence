@@ -40,7 +40,7 @@ class Detection(QThread):
 		self.running = True
 
 		# Starts camera
-		cap = cv2.VideoCapture("pistol.mp4")
+		cap = cv2.VideoCapture("pistol-loading.mp4")
 		
 		# Detection while loop
 		while self.running:
