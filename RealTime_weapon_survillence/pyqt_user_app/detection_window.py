@@ -3,6 +3,9 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QImage, QPixmap
 import cv2
+import os
+
+os.environ.pop("QT_QPA_PLATFORM_PLUGIN_PATH")
 import numpy as np
 import time
 import requests

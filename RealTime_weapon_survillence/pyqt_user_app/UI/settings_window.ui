@@ -36,7 +36,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Enter camera's location and a mobile number or email address.</string>
+     <string>Enter camera's location and email address.</string>
     </property>
     <property name="wordWrap">
      <bool>true</bool>
@@ -75,7 +75,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Mobile number or email address:</string>
+     <string>Email address:</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
