@@ -1,0 +1,4 @@
+*.venv
+*.weights
+*.txt
+migrations
