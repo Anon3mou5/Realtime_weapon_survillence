@@ -6,29 +6,40 @@ import cv2
 import numpy as np
 import time
 import requests
+from imutils.video import FileVideoStream
 
 # Handles the YOLOv4 detection algorithm, saves detected frames and sends alert to the server-side application
 class Detection(QThread):
 
-	def __init__(self, token, location, receiver):
+	def __init__(self, token, location, receiver,file_p):
 		super(Detection, self).__init__()	
 
 		self.token = token
 		self.location = location
 		self.receiver = receiver
-	
+		self.file_p = file_p
+
 	changePixmap = pyqtSignal(QImage)
 
 	# Runs the detection model, evaluates detections and draws boxes around detected objects
 	def run(self):
 		
 		# Loads Yolov4
-		net = cv2.dnn.readNet("weights/yolov4.weights", "cfg/yolov4.cfg")
-		classes = []
+		if(self.file_p.startswith("rifle")):
+		   net = cv2.dnn.readNet("weights/yolo_rifle.weights", "cfg/yolo_rifle.cfg")
+		   classes = ['Rifle']
+		elif (self.file_p.startswith("knife")):
+			   net = cv2.dnn.readNet("weights/yolov3.weights", "cfg/yolo_v3.cfg")
+			   with open('coco.names') as f:
+				   classes =[line.strip() for line in f.readlines()]
+		else:
+		   net = cv2.dnn.readNet("weights/yolov4.weights", "cfg/yolov4.cfg")
+		   with open("obj.names", "r") as f:
+			   classes = [line.strip() for line in f.readlines()]
+
 
 		# Loads object names
-		with open("obj.names", "r") as f:
-			classes = [line.strip() for line in f.readlines()]
+
 		
 		layer_names = net.getLayerNames()
 		output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
@@ -40,7 +51,8 @@ class Detection(QThread):
 		self.running = True
 
 		# Starts camera
-		cap = cv2.VideoCapture("pistol.mp4")
+		cap = cv2.VideoCapture(self.file_p)
+		cap.set(cv2.CAP_PROP_FPS, int(60))
 		
 		# Detection while loop
 		while self.running:
@@ -88,6 +100,8 @@ class Detection(QThread):
 					if i in indexes:
 						x, y, w, h = boxes[i]
 						label = str(classes[class_ids[i]])
+						# print(class_id)
+						# print(label)
 						confidence = confidences[i]
 						color = (256, 0, 0)
 						cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
@@ -129,3 +143,4 @@ class Detection(QThread):
 			else:
 				print('Unable to send alert to the server')
 				
+

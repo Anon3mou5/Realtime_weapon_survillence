@@ -31,7 +31,9 @@ class SettingsWindow(QMainWindow):
 			if self.detection_window.isVisible():
 				print('Detection window is already open!')
 			else:
-				self.detection_window.create_detection_instance(self.token, self.location_input.text(), self.sendTo_input.text())
+				self.detection_window.create_detection_instance(self.token, self.location_input.text(), self.sendTo_input.text()
+				 ,self.send_file_name.text()
+				 )
 				self.detection_window.start_detection()
 	
 	#When closed

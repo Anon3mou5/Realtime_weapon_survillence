@@ -17,8 +17,12 @@ class DetectionWindow(QMainWindow):
 		self.stop_detection_button.clicked.connect(self.close)
 
 	# Created detection instance
-	def create_detection_instance(self, token, location, receiver):
-		self.detection = Detection(token, location, receiver)
+	def create_detection_instance(self, token, location, receiver
+	,file_p
+	):
+		self.detection = Detection(token, location, receiver
+		,file_p
+		)
 
 	# Assigns detection output to the label in order to display detection output
 	@pyqtSlot(QImage)
