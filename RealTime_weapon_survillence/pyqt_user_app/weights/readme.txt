@@ -1,1 +1,0 @@
-Add yolov4.weights within this folder.

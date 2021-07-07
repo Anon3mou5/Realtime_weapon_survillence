@@ -2,3 +2,4 @@
 *.weights
 *.txt
 migrations
+*.jpg
